@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
+import sys
 import warnings
+
+PY3 = sys.version_info[0] == 3
+if PY3:
+    from gevent import monkey
+    monkey.patch_all()
 
 import pytest
 from vcr import VCR

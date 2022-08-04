@@ -2,13 +2,25 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import codecs
 from setuptools import setup
+
+PY2 = sys.version_info[0] == 2
+PY3 = sys.version_info[0] == 3
 
 
 def read(fname):
     file_path = os.path.join(os.path.dirname(__file__), fname)
     return codecs.open(file_path, encoding='utf-8').read()
+
+
+def install_requires():
+    reqs = ['pytest>=3.6.0', 'vcrpy']
+    if PY2:
+        reqs.append('gevent==1.2.2')
+    if PY3:
+        reqs.append('gevent==1.5.0')
 
 
 setup(
@@ -23,7 +35,7 @@ setup(
     description='Plugin for managing VCR.py cassettes',
     long_description=read('README.rst'),
     py_modules=['pytest_vcr'],
-    install_requires=['pytest>=3.6.0', 'vcrpy'],
+    install_requires=install_requires(),
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Pytest',
